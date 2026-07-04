@@ -1,0 +1,10 @@
+name = "JLX"
+uuid = "3262f8d0-daab-4fb2-aac9-9bdcd9f9c3f1"
+version = "1.0.0"
+authors = ["synt7x"]
+
+[deps]
+JLXSyntax = "07bf817f-78d3-4ea8-a096-43d36d7ce150"
+
+[compat]
+JLXSyntax = "1.0.0"
