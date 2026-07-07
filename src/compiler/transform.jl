@@ -1,3 +1,4 @@
+
 function generate_children(children)
     Expr(:tuple, children...)
 end
@@ -28,6 +29,15 @@ function generate_component(name, properties, children)
 end
 
 function generate_tag(tag, properties, children)
+    if isnothing(tag)
+        return :(
+            JLX.element(
+                nothing,
+                children=$(generate_children(children))
+            )
+        )
+    end
+
     tag = String(tag)
 
     props = generate_properties(properties)
@@ -61,13 +71,25 @@ function transform_jlx!(ex, args)
     for arg in args[2:end]
         if arg isa Expr && arg.head == :jlx_property
             if is_tag
-                push!(properties,
-                    generate_property(arg.args[1], transform!(arg.args[2]))
-                )
+                if length(arg.args) == 1
+                    push!(properties,
+                        generate_property(arg.args[1], true)
+                    )
+                else
+                    push!(properties,
+                        generate_property(arg.args[1], transform!(arg.args[2]))
+                    )
+                end
             elseif is_component
-                push!(properties,
-                    generate_argument(arg.args[1], transform!(arg.args[2]))
-                )
+                if length(arg.args) == 1
+                    push!(properties,
+                        generate_argument(arg.args[1], true)
+                    )
+                else
+                    push!(properties,
+                        generate_argument(arg.args[1], transform!(arg.args[2]))
+                    )
+                end
             end
         else
             push!(children, transform!(arg))
