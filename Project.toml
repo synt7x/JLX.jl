@@ -5,7 +5,9 @@ authors = ["synt7x"]
 
 [deps]
 JLXSyntax = "07bf817f-78d3-4ea8-a096-43d36d7ce150"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 JLXSyntax = "1.0"
+Test = "1.11.0"
 julia = "1.12"
